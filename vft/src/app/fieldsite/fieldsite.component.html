@@ -1,0 +1,59 @@
+<div class="container-fluid">
+    <div class="row">
+    <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar" id="sidebarMenu" th:fragment="sidebarMenu (site_id, field_trip_id)">
+        <div class="position-sticky pt-3">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a aria-current="page" class="nav-link active" routerLink="/fieldsite/home" routerLinkActive="active">
+                        <span data-feather="home"></span>
+                        Field Site Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/site/tour" th:href="'/site/tour?id='+ ${site_id}">
+                        <span data-feather="map-pin"></span>
+                        Virtual Tour
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/drone" th:href="'/site/drone?id='+ ${site_id}">
+                        <span data-feather="video"></span>
+                        Drone Footage
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/site/map" th:href="'/site/map?id='+ ${site_id}">
+                        <span data-feather="map"></span>
+                        Site Map
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="'/fieldguide/fieldguide?id='+ ${site_id}">
+                        <span data-feather="book-open"></span>
+                        Field Guide
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="'/site/activities?id='+ ${site_id}">
+                        <span data-feather="book-open"></span>
+                        Activities
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="'/loadfieldtrip?id='+ ${field_trip_id}">
+                        <span data-feather="home"></span>
+                        Back to Trip Overview
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <nav aria-label="breadcrumb" class="py-3">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Fieldtrip name</a></li>
+              <li class="breadcrumb-item active" aria-current="page">current site</li>
+            </ol>
+          </nav>
+        <router-outlet></router-outlet>
+    </main>

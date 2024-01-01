@@ -23,7 +23,7 @@
                   <a class="nav-link" id="home" th:classappend="${active == 'home'} ?'active'" href="/">Home</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" id="showcase" th:classappend="${active == 'showcase'} ?'active'" href="/showcase">Showcase</a>
+                  <a class="nav-link" id="showcase" routerLink="/fieldtrip" routerLinkActive="active" ariaCurrentWhenActive="page">Showcase</a>
               </li>
               <li class="nav-item">
                   <a id="embedded_map" class="nav-link" th:classappend="${active == 'map'} ?'active'" href="/fieldtripmap">Map</a>
@@ -36,54 +36,6 @@
               <!--<input aria-label="Search" class="form-control" placeholder="Search" type="text">-->
           </form>
       </div>
-  </div>
-</nav>
-<nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar" id="sidebarMenu" th:fragment="sidebarMenu (site_id, field_trip_id)">
-  <div class="position-sticky pt-3">
-      <ul class="nav flex-column">
-          <li class="nav-item">
-              <a aria-current="page" class="nav-link active" href="/fieldsite" th:href="'/fieldsite?id='+ ${site_id}">
-                  <span data-feather="home"></span>
-                  Field Site Home
-              </a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/site/tour" th:href="'/site/tour?id='+ ${site_id}">
-                  <span data-feather="map-pin"></span>
-                  Virtual Tour
-              </a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/drone" th:href="'/site/drone?id='+ ${site_id}">
-                  <span data-feather="video"></span>
-                  Drone Footage
-              </a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/site/map" th:href="'/site/map?id='+ ${site_id}">
-                  <span data-feather="map"></span>
-                  Site Map
-              </a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="#" th:href="'/fieldguide/fieldguide?id='+ ${site_id}">
-                  <span data-feather="book-open"></span>
-                  Field Guide
-              </a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="#" th:href="'/site/activities?id='+ ${site_id}">
-                  <span data-feather="book-open"></span>
-                  Activities
-              </a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="#" th:href="'/loadfieldtrip?id='+ ${field_trip_id}">
-                  <span data-feather="home"></span>
-                  Back to Trip Overview
-              </a>
-          </li>
-      </ul>
   </div>
 </nav>
 
