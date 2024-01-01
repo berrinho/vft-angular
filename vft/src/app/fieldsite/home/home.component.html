@@ -1,1 +1,17 @@
-<p>FieldsiteHomeComponent home works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <p th:utext="${fieldSite.getDescription()}">Site description</p>
+        </div>
+        <div class="col-sm-6">
+            <!-- IF image use this (move this to service?)-->
+            <div th:if="${fieldSite.getHomepageImage() !=null && !fieldSite.getHomepageImage().isEmpty()}">
+                <img th:src="${fieldSite.getHomepageImage()}" width="400"  class="responsive img-fluid border"/>
+            </div>
+            <!-- ELSE use map -->
+            <div th:unless="${fieldSite.getHomepageImage() != null && !fieldSite.getHomepageImage().isEmpty()}">
+                <img th:src="${fieldSite.getLocalMap()}" width="400"  class="responsive img-fluid border "/>
+            </div>
+        </div>
+    </div>
+</div>

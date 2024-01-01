@@ -4,13 +4,14 @@
         <div class="position-sticky pt-3">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a aria-current="page" class="nav-link active" routerLink="/fieldsite/home" routerLinkActive="active">
+                    <a aria-current="page" class="nav-link" [routerLink]="['/fieldsite/home']" routerLinkActive="active" 
+                    >
                         <span data-feather="home"></span>
                         Field Site Home
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/site/tour" th:href="'/site/tour?id='+ ${site_id}">
+                    <a class="nav-link" routerLink="/fieldsite/tour" routerLinkActive="active">
                         <span data-feather="map-pin"></span>
                         Virtual Tour
                     </a>
