@@ -19,7 +19,7 @@ export class FieldsiteHomeComponent implements OnInit, OnDestroy{
   constructor(private siteService: FieldsiteService){}
   
   ngOnInit(): void {
-    this.sub = this.siteService.getSite(2).subscribe({
+    this.sub = this.siteService.cachedObservable.subscribe({
       next: site => {
         this.currentSite = site;
       },

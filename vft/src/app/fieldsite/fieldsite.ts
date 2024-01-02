@@ -1,4 +1,7 @@
+import { link } from "../fieldtrip/fieldtrip";
+
 export interface Fieldsite {
+    id:                  number;
     siteOrder:           number;
     description:         string;
     name:                string;
@@ -9,4 +12,13 @@ export interface Fieldsite {
     homepageImage:       string;
     xmapCoord:           number;
     ymapCoord:           number;
+    _links:              SiteLinks;
 }
+
+export interface SiteLinks {
+    self:      link;
+    site:      link;
+    fieldTrip: link;
+}
+
+

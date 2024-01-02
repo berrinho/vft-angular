@@ -6,8 +6,9 @@ import { FieldsiteTourComponent } from './fieldsite/tour/tour.component';
 
 export const routes: Routes = [
     {path: 'fieldtrip', component: FieldtripComponent},
-    {path: 'fieldsite', component: FieldsiteComponent, 
+    {path: 'fieldsite/:id', component: FieldsiteComponent, 
         children: [
+                {path: '', component: FieldsiteHomeComponent},
                 {path: 'home', component: FieldsiteHomeComponent},
                 {path: 'tour', component: FieldsiteTourComponent}
                 ]  

@@ -4,9 +4,9 @@
         <span>Sites</span>
       </h6>
       <ul class="nav flex-column mb-2">
-        <li th:each="fieldSite : ${siteCommands}" class="nav-item" >
-            <a class="nav-link" routerLink="../fieldsite" routerLinkActive="active" >
-                <span data-feather="file-text" th:text="' '"></span>Site 1</a>
+        <li *ngFor="let site of sites" class="nav-item" >
+            <a class="nav-link" [routerLink]="['../fieldsite', site?.id]" routerLinkActive="active" >
+                <span data-feather="file-text"></span>{{site.name}}</a>
         </li>
       </ul>
     </div>

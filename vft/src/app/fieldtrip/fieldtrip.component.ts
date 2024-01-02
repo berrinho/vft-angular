@@ -1,13 +1,40 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Fieldsite } from '../fieldsite/fieldsite';
+
+import { CommonModule } from '@angular/common';
+import { FieldtripService } from './fieldtrip.service';
+import { Fieldtrip } from './fieldtrip';
 
 @Component({
   selector: 'app-fieldtrip',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, CommonModule],
   templateUrl: './fieldtrip.component.html',
   styleUrl: './fieldtrip.component.css'
 })
 export class FieldtripComponent {
+
+  trip!: Fieldtrip;
+  sites!: Fieldsite[];
+  errorMessage: string="";
+  sub!: Subscription;
+  constructor(private tripService: FieldtripService, activatedRoute: ActivatedRoute){}
+
+  ngOnInit(): void {
+    
+    this.sub = this.tripService.getFieldtrip("http://localhost:8080/api/fieldtrips/1").subscribe({
+      next: trip => {
+        this.trip = trip;
+        this.sites = trip.sortedSites;
+      },
+      error: err => this.errorMessage = err}
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
 
 }

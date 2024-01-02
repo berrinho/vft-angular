@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Fieldsite } from './fieldsite';
 import { Subscription } from 'rxjs';
 import { FieldsiteService } from './fieldsite.service';
@@ -16,10 +16,15 @@ export class FieldsiteComponent implements OnInit, OnDestroy {
   currentSite!: Fieldsite;
   errorMessage: string="";
   sub!: Subscription;
-  constructor(private siteService: FieldsiteService){}
+
+  constructor(private siteService: FieldsiteService, private activatedRoute: ActivatedRoute){
+
+  }
 
   ngOnInit(): void {
-    this.sub = this.siteService.getSite(2).subscribe({
+    var siteId = Number(this.activatedRoute.snapshot.paramMap.get("id"));
+
+    this.sub = this.siteService.getSite(siteId).subscribe({
       next: site => {
         this.currentSite = site;
       },
