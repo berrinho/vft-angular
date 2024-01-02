@@ -50,10 +50,10 @@
         </div>
     </nav>
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        <nav aria-label="breadcrumb" class="py-3">
+        <nav aria-label="breadcrumb" class="pt-3">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="#">Fieldtrip name</a></li>
-              <li class="breadcrumb-item active" aria-current="page">current site</li>
+              <li class="breadcrumb-item active" aria-current="page">{{currentSite?.name}}</li>
             </ol>
           </nav>
         <router-outlet></router-outlet>
