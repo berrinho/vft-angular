@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Fieldsite } from "./fieldsite";
 import { Injectable } from "@angular/core";
 import { Observable, catchError, finalize, map, of, share, tap, throwError } from "rxjs";
+import { Fieldtrip } from "../fieldtrip/fieldtrip";
 
 @Injectable({
     providedIn: 'root'
@@ -10,12 +11,16 @@ import { Observable, catchError, finalize, map, of, share, tap, throwError } fro
 export class FieldsiteService {
 
 
+
     indivSiteUrl = 'https://fieldtripviewer.herokuapp.com/api/sites/';
     sitesUrl = 'https://fieldtripviewer.herokuapp.com/api/sites';
+    tripForSiteUrl = "https://fieldtripviewer.herokuapp.com/api/sites/$/fieldTrip";
+    
     //indivSiteUrl = 'http://localhost:8080/api/sites/2';
 
  
     public cachedObservable!: Observable<any>;
+    public cachedTripObservable!: Observable<Fieldtrip>;
     private cachedSiteId!: number;
 
     constructor(private httpclient: HttpClient){}
@@ -23,11 +28,12 @@ export class FieldsiteService {
     public getSite(id: number): Observable<Fieldsite> {
         console.log("site id is " + id);
 
-
+        //if a new site is being requested fetch this via http
         if (!this.cachedObservable || id != this.cachedSiteId) {
             this.cachedObservable = this.httpclient.get<Fieldsite>(this.indivSiteUrl+id)
           .pipe(
             tap(site => this.cachedSiteId = site.id),
+            catchError(this.handleError),
             share()
           );
         }
@@ -52,6 +58,24 @@ export class FieldsiteService {
                 tap(data => console.log('All: ', JSON.stringify(data))),
                 catchError(this.handleError)
             );
+    }
+
+    getTripForSite(siteId: number): Observable<Fieldtrip> {
+        console.log("site to lookkup field trip for is " + siteId);
+        var newstring = this.tripForSiteUrl.replace("$", String(siteId));
+
+         //if a new site is being requested fetch this via http
+         if (!this.cachedTripObservable || siteId != this.cachedSiteId) {
+            this.cachedTripObservable = this.httpclient.get<Fieldtrip>(newstring)
+          .pipe(
+            tap(trip => this.cachedSiteId = siteId),
+            catchError(this.handleError),
+            share()
+          );
+        }
+        return this.cachedTripObservable;
+        //console.log(newstring);
+        
     }
 
 

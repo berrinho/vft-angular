@@ -20,11 +20,14 @@ export class FieldtripComponent {
   sites!: Fieldsite[];
   errorMessage: string="";
   sub!: Subscription;
-  constructor(private tripService: FieldtripService, activatedRoute: ActivatedRoute){}
+
+  constructor(private tripService: FieldtripService, private activatedRoute: ActivatedRoute){}
 
   ngOnInit(): void {
     
-    this.sub = this.tripService.getFieldtrip("http://localhost:8080/api/fieldtrips/1").subscribe({
+    var tripId = Number(this.activatedRoute.snapshot.paramMap.get("id"));
+
+    this.sub = this.tripService.getFieldtrip( tripId ).subscribe({
       next: trip => {
         this.trip = trip;
         this.sites = trip.sortedSites;

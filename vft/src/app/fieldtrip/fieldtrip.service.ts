@@ -10,13 +10,16 @@ import { Fieldtrip } from "./fieldtrip";
 )
 export class FieldtripService {
 
-    fieldtripUrl = "http://localhost:8080/api/fieldtrips/5";
+    //fieldtripUrl = "http://localhost:8080/api/fieldtrips/5";
+    fieldtripUrl = "https://fieldtripviewer.herokuapp.com/api/fieldtrips/";
+
 
     constructor(private httpclient: HttpClient){}
 
-    public getFieldtrip(apiLink: string): Observable<Fieldtrip> {
-        this.fieldtripUrl=apiLink;
-        return this.httpclient.get<Fieldtrip>(this.fieldtripUrl)
+    public getFieldtrip(trip_id: number): Observable<Fieldtrip> {
+        var tripurl = this.fieldtripUrl+String(trip_id);
+
+        return this.httpclient.get<Fieldtrip>(tripurl)
         .pipe(
             tap(data => console.log('All: ', JSON.stringify(data))),
             catchError(this.handleError)
