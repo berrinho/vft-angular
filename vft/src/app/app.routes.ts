@@ -13,8 +13,8 @@ export const routes: Routes = [
     {path: 'fieldsite/:id', component: FieldsiteComponent, 
         children: [
                 {path: '', component: FieldsiteHomeComponent},
-                {path: 'home', component: FieldsiteHomeComponent},
-                {path: 'tour', component: FieldsiteTourComponent}
+                {path: 'home/:id', component: FieldsiteHomeComponent},
+                {path: 'tour/:id', component: FieldsiteTourComponent}
                 ]  
     }
 ];

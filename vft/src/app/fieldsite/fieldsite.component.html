@@ -4,14 +4,14 @@
         <div class="position-sticky pt-3">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a aria-current="page" class="nav-link" [routerLink]="['/fieldsite/home']" routerLinkActive="active" 
+                    <a aria-current="page" class="nav-link" [routerLink]="['./home', currentSite.id]" routerLinkActive="active" 
                     >
                         <span data-feather="home"></span>
                         Field Site Home
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/fieldsite/tour" routerLinkActive="active">
+                    <a class="nav-link" [routerLink]="['./tour', currentSite.id]" routerLinkActive="active">
                         <span data-feather="map-pin"></span>
                         Virtual Tour
                     </a>
@@ -52,7 +52,7 @@
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <nav aria-label="breadcrumb" class="pt-3">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">{{currentTrip?.name}}</a></li>
+              <li class="breadcrumb-item"><a [routerLink]="['/fieldtrip',currentTrip.id]">{{currentTrip?.name}}</a></li>
               <li class="breadcrumb-item active" aria-current="page">{{currentSite?.name}}</li>
             </ol>
           </nav>
