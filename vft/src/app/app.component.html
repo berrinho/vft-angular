@@ -20,7 +20,7 @@
       <div class="collapse navbar-collapse" id="navbarsExample02">
           <ul class="navbar-nav me-auto">
               <li class="nav-item">
-                  <a class="nav-link" id="home" th:classappend="${active == 'home'} ?'active'" href="/">Home</a>
+                  <a class="nav-link" id="home" routerLink="/home" routerLinkActive="active" href="/">Home</a>
               </li>
               <li class="nav-item">
                   <a class="nav-link" id="showcase" routerLink="/showcase" routerLinkActive="active" ariaCurrentWhenActive="page">Showcase</a>
@@ -29,7 +29,7 @@
                   <a id="embedded_map" class="nav-link" th:classappend="${active == 'map'} ?'active'" href="/fieldtripmap">Map</a>
               </li>
               <li class="nav-item">
-                  <a id="fieldguide" class="nav-link" th:classappend="${active == 'fieldguide'} ?'active'" href="/fieldguide/fieldguide?id=1">Field Guide</a>
+                  <a id="fieldguide" class="nav-link" routerLink="/fieldguide" routerLinkActive="active">Field Guide</a>
               </li>
           </ul>
           <form>

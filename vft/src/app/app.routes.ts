@@ -9,7 +9,9 @@ import { FieldguideComponent } from './fieldguide/fieldguide.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
+    {path: 'home', component: HomeComponent},
     {path: 'showcase', component: ShowcaseComponent},
+    {path: 'fieldguide', component: FieldguideComponent},
     {path: 'fieldtrip/:id', component: FieldtripComponent},
     {path: 'fieldsite/:id', component: FieldsiteComponent, 
         children: [
