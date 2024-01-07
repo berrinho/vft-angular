@@ -5,6 +5,7 @@ import {FieldsiteHomeComponent} from './fieldsite/home/home.component';
 import { FieldsiteTourComponent } from './fieldsite/tour/tour.component';
 import { ShowcaseComponent } from './showcase/showcase.component';
 import { HomeComponent } from './home/home.component';
+import { FieldguideComponent } from './fieldguide/fieldguide.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -14,7 +15,8 @@ export const routes: Routes = [
         children: [
                 {path: '', component: FieldsiteHomeComponent},
                 {path: 'home/:id', component: FieldsiteHomeComponent},
-                {path: 'tour/:id', component: FieldsiteTourComponent}
+                {path: 'tour/:id', component: FieldsiteTourComponent},
+                {path: 'fieldguide/:id', component: FieldguideComponent}
                 ]  
     }
 ];
