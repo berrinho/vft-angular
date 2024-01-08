@@ -5,29 +5,29 @@
 
 <div class="container-fluid px-4 py-3">
     <div class="row py-2 text-bg-primary">
-        <div class="col">List of Species in this Field Guide</div>
+        <div class="col">Species Recorded</div>
     </div>
     <div class="row py-4">
         <div class="col-sm">
             <h3>Plants and Fungi</h3>
             <ul>
-                <!--do this better, separating them into plants and animals-->
-                <li *ngFor="let species of speciesList">
-                    <img th:if="${species.getThumbnail()!=null}" th:src="@{'data:image/jpeg;base64,'+${species.generateBase64Image()}}" th:alt="${species.getVernacularName()}" width="100px" height="100px" class="img-thumbnail m-1"/>
-                    <img th:if="${species.getThumbnail()==null}" src="assets/thumbnails/no-image.png" alt="No image available" width="100px" height="100px" class="img-thumbnail m-1"/>
-                    <a th:href="${'/fieldguide/species?speciesid='+ species.getId() +'&id=' + fieldSite.getId()}"
-                           th:text="${species.getVernacularName()}"></a> <em th:text="${'('+species.getSpeciesName()+')'}"></em>
+                <li *ngFor="let species of otherSpeciesList">
+                    <img *ngIf="species.thumbnail!=null" src={{getBase64(species.thumbnail)}} alt={{species.vernacularName}} width="100px" height="100px" class="img-thumbnail m-1"/>
+                    <img *ngIf="species.thumbnail==null" src="assets/thumbnails/no-image.png" alt="No image available" width="100px" height="100px" class="img-thumbnail m-1"/>
+                    <a href="${'/fieldguide/species?speciesid='+ species.getId() +'&id=' + fieldSite.getId()}">
+                           {{species.vernacularName}}</a><em> {{species.speciesName}}</em>
                 </li>
             </ul>
         </div>
         <div class="col-sm p-2">
           <h3>Animals</h3>
             <ul>
-                <li *ngFor="let species of speciesList" th:if="${species.getKingdom()=='Animalia'}">
-                    <img th:if="${species.getThumbnail()!=null}" th:src="@{'data:image/jpeg;base64,'+${species.generateBase64Image()}}" th:alt="${species.getVernacularName()}" width="100px" height="100px" class="img-thumbnail m-1"/>
-                    <img th:if="${species.getThumbnail()==null}" src="assets/thumbnails/no-image.png" alt="No image available" width="100px" height="100px" class="img-thumbnail m-1"/>
-                    <a th:href="${'/fieldguide/species?speciesid='+ species.getId() +'&id=' + fieldSite.getId()}"
-                       th:text="${species.getVernacularName()}"></a> <em th:text="${'('+species.getSpeciesName()+')'}"></em>                            </li>
+                <li *ngFor="let species of animalList">
+                    <img *ngIf="species.thumbnail!=null" src={{getBase64(species.thumbnail)}} alt={{species.vernacularName}} width="100px" height="100px" class="img-thumbnail m-1"/>
+                    <img *ngIf="species.thumbnail==null" src="assets/thumbnails/no-image.png" alt="No image available" width="100px" height="100px" class="img-thumbnail m-1"/>
+                    <a href="${'/fieldguide/species?speciesid='+ species.getId() +'&id=' + fieldSite.getId()}">
+                    {{species.vernacularName}}</a><em> {{species.speciesName}}</em>
+                </li>
             </ul>
         </div>
     </div>
