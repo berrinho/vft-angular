@@ -31,6 +31,15 @@ export class FieldguideService{
         );
     }
 
+    public getSpecies(species_id:Number): Observable<Species> {
+
+        return this.httpclient.get<Species>(this.speciesUrl+"/"+String(species_id))
+        .pipe(
+            tap(data => console.log('All: ', JSON.stringify(data))),
+            catchError(this.handleError)
+        );
+    }
+
     private handleError(err: HttpErrorResponse): Observable<never>{
         let errorMessage = '';
         if (err.error instanceof ErrorEvent) {

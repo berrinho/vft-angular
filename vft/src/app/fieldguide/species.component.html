@@ -1,0 +1,66 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-1 mb-3 border-bottom">
+    <h1 class="h2" th:text="${species.getSpeciesName()} +', ' + ${species.getVernacularName()}">{{species.speciesName}}</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group me-2">
+            <a class="btn btn-sm btn-outline-secondary" th:href="'/fieldguide/editspecies?speciesid=' + ${species.getId()} + '&id=' + ${fieldSite.getId()}" href="/fieldguide/editspecies">Edit</a>
+            <a class="btn btn-sm btn-outline-secondary" th:href="'/species/delete?speciesid=' + ${species.getId()} + '&id=' + ${fieldSite.getId()}" href="/fieldguide/delete" >Delete</a>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="container-fluid px-4 pb-1">
+    <div class="row py-1">
+        <div class="col-sm" >
+            <div >
+                <button aria-controls="collapseTaxonomy" aria-expanded="true" class="btn btn-primary"
+                        data-bs-target="#collapseTaxonomy" data-bs-toggle="collapse" type="button">
+                    Hide Taxonomy
+                </button>
+                <div class="collapse show" id="collapseTaxonomy">
+                    <div class="card card-body">
+                        <ul>
+                            <li><strong>Species</strong> <em th:text="${species.getSpeciesName()}"> {{species.speciesName}}</em></li>
+                            <li><strong>Genus</strong> <em th:text="${species.getGenus()}"> {{species.genus}}</em></li>
+                            <li><strong>Family</strong> <span th:text="${species.getFamily()}"> {{species.family}}</span></li>
+                            <li><strong>Order</strong> <span th:text="${species.getSpeciesOrder()}"> {{species.speciesOrder}}</span></li>
+                            <li><strong>Class</strong> <span th:text="${species.getSpeciesClass()}"> {{species.speciesClass}}</span></li>
+                            <li><strong>Phylum</strong> <span th:text="${species.getPhylum()}"> {{species.phylum}}</span></li>
+                            <li><strong>Kingdom</strong> <span th:text="${species.getKingdom()}"> {{species.kingdom}}</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+            <div class="py-2" >
+                <h4>Description</h4>
+            <div th:text="${species.getDescription()}">{{species.description}}</div>
+            </div>
+            <div class="py-2">
+                <h4>Distribution</h4>
+                <div th:text="${species.getDistribution()}">{{species.distribution}}</div>
+            </div>
+                <div class="py-2">
+                    <h4>Habitat</h4>
+                <div th:text="${species.getHabitat()}">{{species.habitat}}</div>
+                    </div>
+                <div class="py-1">
+
+                    <h4>Key Features</h4>
+                    <div th:text="${species.getKeyFeatures()}">{{species.keyFeatures}}</div>
+                </div>
+        </div>
+        </div>
+        <div class="col-sm bg-light p-2">
+            <div th:switch="${species.getMainImage() != null}">
+                <img th:case="${true}" class="responsive img-fluid border rounded"  th:src="${'/image/' + species.getMainImage().getId()}" th:alt="${species.getMainImage().getAltText()}" th:title="${species.getMainImage().getAltText()}"  src="" />
+                <img th:case="*" class="responsive img-fluid border rounded" th:src="${'/species/no-image-available.png'}" >
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="text-bg-primary">&nbsp;</div>
+    </div>
+
+</div>
+

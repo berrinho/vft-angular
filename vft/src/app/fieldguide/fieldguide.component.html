@@ -7,14 +7,14 @@
     <div class="row py-2 text-bg-primary">
         <div class="col">Species Recorded</div>
     </div>
-    <div class="row py-4">
+    <div class="row py-4" *ngIf="!loading">
         <div class="col-sm">
             <h3>Plants and Fungi</h3>
             <ul>
                 <li *ngFor="let species of otherSpeciesList">
                     <img *ngIf="species.thumbnail!=null" src={{getBase64(species.thumbnail)}} alt={{species.vernacularName}} width="100px" height="100px" class="img-thumbnail m-1"/>
                     <img *ngIf="species.thumbnail==null" src="assets/thumbnails/no-image.png" alt="No image available" width="100px" height="100px" class="img-thumbnail m-1"/>
-                    <a href="${'/fieldguide/species?speciesid='+ species.getId() +'&id=' + fieldSite.getId()}">
+                    <a [routerLink]="['/species',species.id]">
                            {{species.vernacularName}}</a><em> {{species.speciesName}}</em>
                 </li>
             </ul>
@@ -31,6 +31,7 @@
             </ul>
         </div>
     </div>
+    <loading-indicator *ngIf="loading"></loading-indicator>
     <div class="row py-2 text-bg-primary">
         <div></div>
     </div>

@@ -1,19 +1,21 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Species } from './species';
 import { FieldguideService } from './fieldguide.service';
-import { Subscription } from 'rxjs';
+import { Subscription, finalize } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { LoadingIndicatorComponent } from '../shared/loading-indicator.component';
 
 @Component({
   selector: 'app-fieldguide',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink, LoadingIndicatorComponent],
   templateUrl: './fieldguide.component.html',
   styleUrl: './fieldguide.component.css'
 })
 export class FieldguideComponent implements OnInit, OnDestroy{
 
-
+  loading = false;
   speciesList!: Species[];
   animalList!: Species[];
   otherSpeciesList!: Species[];
@@ -22,7 +24,10 @@ export class FieldguideComponent implements OnInit, OnDestroy{
 constructor(private fieldguideService: FieldguideService){}
 
   ngOnInit(): void {
-    this.sub=this.fieldguideService.getSpeciesList().subscribe(
+    this.loading = true;
+    this.sub=this.fieldguideService.getSpeciesList()
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(
       {
         next: species => 
         { 
