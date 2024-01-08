@@ -1,13 +1,15 @@
-<div class="border-bottom">
+<loading-indicator *ngIf="loading"></loading-indicator>
+
+<div class="border-bottom" *ngIf="!loading">
     <h1 class="h2" th:text="'Field Guide for ' + ${fieldSite.getName()}">Field Guide</h1>
 </div>
 
 
-<div class="container-fluid px-4 py-3">
-    <div class="row py-2 text-bg-primary">
+<div class="container-fluid px-4 py-3" *ngIf="!loading">
+    <div class="row py-2 text-bg-primary" >
         <div class="col">Species Recorded</div>
     </div>
-    <div class="row py-4" *ngIf="!loading">
+    <div class="row py-4" >
         <div class="col-sm">
             <h3>Plants and Fungi</h3>
             <ul>
@@ -31,7 +33,7 @@
             </ul>
         </div>
     </div>
-    <loading-indicator *ngIf="loading"></loading-indicator>
+
     <div class="row py-2 text-bg-primary">
         <div></div>
     </div>
