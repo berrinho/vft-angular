@@ -5,11 +5,12 @@ import { Subscription, finalize } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LoadingIndicatorComponent } from '../shared/loading-indicator.component';
+import { FormsModule, NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-fieldguide',
   standalone: true,
-  imports: [CommonModule, RouterLink, LoadingIndicatorComponent],
+  imports: [CommonModule, RouterLink, LoadingIndicatorComponent, FormsModule],
   templateUrl: './fieldguide.component.html',
   styleUrl: './fieldguide.component.css'
 })
@@ -18,8 +19,11 @@ export class FieldguideComponent implements OnInit, OnDestroy{
   loading = false;
   speciesList!: Species[];
   animalList!: Species[];
+  filteredAnimalList: Species[] = [];
   otherSpeciesList!: Species[];
+  filteredOtherSpeciesList: Species[] = [];
   sub! : Subscription;
+  private _listFilter: string ='';
 
 constructor(private fieldguideService: FieldguideService){}
 
@@ -43,6 +47,9 @@ constructor(private fieldguideService: FieldguideService){}
                 }
               }
           )
+          this.filteredAnimalList=this.animalList;
+          this.filteredOtherSpeciesList=this.otherSpeciesList;
+          this.listFilter = '';
         }
       }  
     )
@@ -51,6 +58,29 @@ constructor(private fieldguideService: FieldguideService){}
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
+
+  get listFilter():string{
+    return this._listFilter;
+}
+set listFilter(value: string){
+    this._listFilter = value;
+    console.log("list filter = " + this._listFilter);
+    this.filteredAnimalList = this.performAnimalFilter(value); 
+    this.filteredOtherSpeciesList = this.performOtherFilter(value); 
+}
+
+
+performAnimalFilter(filterBy: string): Species[] {
+    filterBy = filterBy.toLocaleLowerCase();
+    return this.animalList.filter((species: Species) => 
+    species.vernacularName.toLocaleLowerCase().includes(filterBy));
+}
+performOtherFilter(filterBy: string): Species[] {
+  filterBy = filterBy.toLocaleLowerCase();
+  return this.otherSpeciesList.filter((species: Species) => 
+  species.vernacularName.toLocaleLowerCase().includes(filterBy));
+}
+
 
   public getBase64(arg0: string): String {
     return "data:image/png;base64,"+arg0;

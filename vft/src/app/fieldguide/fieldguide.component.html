@@ -5,14 +5,18 @@
 <loading-indicator *ngIf="loading"></loading-indicator>
 
 <div class="container-fluid px-4 py-3" *ngIf="!loading">
-    <div class="row py-2 text-bg-primary" >
-        <div class="col">Species Recorded</div>
-    </div>
+    <div class="row">
+        <div class="col-md-2">Filter by:</div>
+        <div class="col-md-4">
+            <input type="text" [(ngModel)]="listFilter"/>
+        </div>
+    </div>  
+
     <div class="row py-4" >
         <div class="col-sm">
             <h3>Plants and Fungi</h3>
             <ul>
-                <li *ngFor="let species of otherSpeciesList">
+                <li *ngFor="let species of filteredOtherSpeciesList">
                     <img *ngIf="species.thumbnail!=null" src={{getBase64(species.thumbnail)}} alt={{species.vernacularName}} width="100px" height="100px" class="img-thumbnail m-1"/>
                     <img *ngIf="species.thumbnail==null" src="assets/thumbnails/no-image.png" alt="No image available" width="100px" height="100px" class="img-thumbnail m-1"/>
                     <a [routerLink]="['/species',species.id]">
@@ -23,7 +27,7 @@
         <div class="col-sm p-2">
           <h3>Animals</h3>
             <ul>
-                <li *ngFor="let species of animalList">
+                <li *ngFor="let species of filteredAnimalList">
                     <img *ngIf="species.thumbnail!=null" src={{getBase64(species.thumbnail)}} alt={{species.vernacularName}} width="100px" height="100px" class="img-thumbnail m-1"/>
                     <img *ngIf="species.thumbnail==null" src="assets/thumbnails/no-image.png" alt="No image available" width="100px" height="100px" class="img-thumbnail m-1"/>
                     <a href="${'/fieldguide/species?speciesid='+ species.getId() +'&id=' + fieldSite.getId()}">
