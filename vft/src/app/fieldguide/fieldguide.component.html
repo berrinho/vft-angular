@@ -35,6 +35,17 @@
                 </li>
             </ul>
         </div>
+        <div class="col-sm p-2" *ngIf="species$ | async as speciesObs">
+            <h3>All via observable</h3>
+              <ul>
+                  <li *ngFor="let species of speciesObs">
+                      <img *ngIf="species.thumbnail!=null" src={{getBase64(species.thumbnail)}} alt={{species.vernacularName}} width="100px" height="100px" class="img-thumbnail m-1"/>
+                      <img *ngIf="species.thumbnail==null" src="assets/thumbnails/no-image.png" alt="No image available" width="100px" height="100px" class="img-thumbnail m-1"/>
+                      <a href="${'/fieldguide/species?speciesid='+ species.getId() +'&id=' + fieldSite.getId()}">
+                      {{species.vernacularName}}</a><em> {{species.speciesName}}</em>
+                  </li>
+              </ul>
+          </div>
     </div>
 
     <div class="row py-2 text-bg-primary">

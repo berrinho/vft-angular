@@ -16,6 +16,8 @@ import { FormsModule, NgModel } from '@angular/forms';
 })
 export class FieldguideComponent implements OnInit, OnDestroy{
 
+  constructor(private fieldguideService: FieldguideService){}
+
   loading = false;
   speciesList!: Species[];
   animalList!: Species[];
@@ -25,7 +27,9 @@ export class FieldguideComponent implements OnInit, OnDestroy{
   sub! : Subscription;
   private _listFilter: string ='';
 
-constructor(private fieldguideService: FieldguideService){}
+  species$ = this.fieldguideService.speciesList$;
+
+
 
   ngOnInit(): void {
     this.loading = true;
