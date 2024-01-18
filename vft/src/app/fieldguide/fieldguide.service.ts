@@ -16,7 +16,7 @@ export class FieldguideService{
             // Assuming the array is wrapped in an object called 'species' within the embedded codeing
             speciesList = response._embedded.species;
             speciesList.sort((a,b) =>
-              ( a.speciesName > b.speciesName ? 1: -1)
+              ( a.vernacularName > b.vernacularName ? 1: -1)
             )
             return speciesList;
           }),
@@ -26,29 +26,6 @@ export class FieldguideService{
     );
 
     constructor(private httpclient: HttpClient){}
-
-    /**
-     * REMOVE THIS
-     * @returns 
-     */
-    public getSpeciesList(): Observable<Species[]> {
-
-        return this.httpclient.get<any>(this.speciesUrl)
-        .pipe(
-            map(response => {
-                var speciesList: Species[];
-                // Assuming the array is wrapped in an object called 'species' within the embedded codeing
-                speciesList = response._embedded.species;
-                speciesList.sort((a,b) =>
-                  ( a.speciesName > b.speciesName ? 1: -1)
-                )
-                return speciesList;
-              }),
-              shareReplay(1),
-            tap(data => console.log('All: ', JSON.stringify(data))),
-            catchError(this.handleError)
-        );
-    }
 
     /**
      * @todo convert to declarative using observable?
