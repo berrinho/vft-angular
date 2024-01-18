@@ -6,14 +6,14 @@
 
 <div class="container-fluid px-4 py-3" *ngIf="!loading">
     <div class="row">
-        <div class="col-md-2">Filter by:</div>
-        <div class="col-md-4">
+        <div class="col-md-3">Filter by vernacular name:</div>
+        <div class="col-md-9">
             <input type="text" (keyup)="onSearch($any($event.target).value)"/>
         </div>
     </div>  
 
 
-        <div class="row py-4" *ngIf="species$ | async as speciesObs">
+        <div class="row py-2" *ngIf="species$ | async as speciesObs">
             
             <div class="col-sm-12 col-md-4 p-2" *ngFor="let species of speciesObs">
                 <div class="card">
