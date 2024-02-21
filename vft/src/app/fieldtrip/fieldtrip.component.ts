@@ -2,6 +2,8 @@ import { AfterViewInit, Component } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Fieldsite } from '../fieldsite/fieldsite';
+//nb - to use types like this install leaflet as follows npm install leaflet @types/leaflet
+//also need to add the leaflet stylesheet to angular.json
 import * as L from 'leaflet';
 import { CommonModule } from '@angular/common';
 import { FieldtripService } from './fieldtrip.service';
@@ -61,5 +63,12 @@ export class FieldtripComponent implements AfterViewInit {
     });
 
     tiles.addTo(this.map);
+
+    for ( const site of this.sites) {
+        const marker = L.marker([site.ymapCoord, site.xmapCoord ]);
+        marker.bindPopup("<b>" + site.name + "</b><br><a href='/fieldsite/" + site.id + "'>Visit</a>");
+        marker.addTo(this.map);
+
+    }
   }
 }

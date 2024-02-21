@@ -7,11 +7,13 @@ import { ShowcaseComponent } from './showcase/showcase.component';
 import { HomeComponent } from './home/home.component';
 import { FieldguideComponent } from './fieldguide/fieldguide.component';
 import { SpeciesComponent } from './fieldguide/species.component';
+import { MapComponent } from './map/map.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'home', component: HomeComponent},
     {path: 'showcase', component: ShowcaseComponent},
+    {path: 'fieldtripmap', component: MapComponent},
     {path: 'fieldguide', component: FieldguideComponent},
     {path: 'species/:id', component: SpeciesComponent},
     {path: 'fieldtrip/:id', component: FieldtripComponent},
