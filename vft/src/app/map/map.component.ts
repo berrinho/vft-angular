@@ -1,8 +1,9 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { FieldtripService } from '../fieldtrip/fieldtrip.service';
 import { CommonModule } from '@angular/common';
 import * as L from 'leaflet';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-map',
@@ -11,12 +12,14 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './map.component.html',
   styleUrl: './map.component.css'
 })
-export class MapComponent implements AfterViewInit{
+export class MapComponent implements AfterViewInit, OnDestroy{
 
   constructor(private fieldTripService: FieldtripService){}
+
   errorMessage: String = "";
   trips$ = this.fieldTripService.fieldTripList$;
   private map!: L.Map;
+  private sub!: Subscription;
 
   ngAfterViewInit(): void {
     this.initMap();
@@ -37,7 +40,7 @@ export class MapComponent implements AfterViewInit{
 
     tiles.addTo(this.map);
 
-    this.trips$.subscribe({
+    this.sub = this.trips$.subscribe({
       next: triplist => {
         for (let trip of triplist){
           const marker = L.marker([trip.ymapCoord, trip.xmapCoord ]);
@@ -46,7 +49,14 @@ export class MapComponent implements AfterViewInit{
           console.log('got marker for trip ' + trip.name);
         }
       },
-      error: err => this.errorMessage = err}
+      error: err => {
+          this.errorMessage = err;
+          console.log(err);
+        }}
     );
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe;
   }
 }
