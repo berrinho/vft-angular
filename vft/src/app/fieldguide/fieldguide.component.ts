@@ -21,19 +21,22 @@ export class FieldguideComponent  {
 
   loading = false;
 
+  //use this to emit changes to search terms to the combineLatest for species
   private searchSpeciesSubject$ = new BehaviorSubject<string>("");
-  searchSpeciesObs$ = this.searchSpeciesSubject$.asObservable();
+  //this would be needed if we wanted to expose the observable?
+  //searchSpeciesObs$ = this.searchSpeciesSubject$.asObservable();
 
-  species$ = combineLatest( this.fieldguideService.speciesList$, this.searchSpeciesObs$).pipe
-  (
-    map( ([speciesList, searchFilter]) => speciesList.filter(species=>species.vernacularName.toLowerCase().includes(searchFilter) )) 
-,
-    tap( (obj) => console.log('Species found: ' + obj.length)  ),
-      catchError(err => {
-       //this.errorMessageSubject.next(err);
-       return EMPTY;
-     })
-  );
+  species$ = combineLatest( this.fieldguideService.speciesList$, this.searchSpeciesSubject$).pipe
+    (
+      map( ([speciesList, searchFilter]) => speciesList.filter(
+                                            species=>species.vernacularName.toLowerCase().includes(searchFilter) )) 
+  ,
+      tap( (obj) => console.log('Species found: ' + obj.length)  ),
+        catchError(err => {
+        //this.errorMessageSubject.next(err);
+        return EMPTY;
+      })
+    );
 
   onSearch(searchFilter: string) {
     console.log(searchFilter);

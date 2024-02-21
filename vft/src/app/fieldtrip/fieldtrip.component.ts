@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Fieldsite } from '../fieldsite/fieldsite';
-
+import * as L from 'leaflet';
 import { CommonModule } from '@angular/common';
 import { FieldtripService } from './fieldtrip.service';
 import { Fieldtrip } from './fieldtrip';
@@ -14,14 +14,21 @@ import { Fieldtrip } from './fieldtrip';
   templateUrl: './fieldtrip.component.html',
   styleUrl: './fieldtrip.component.css'
 })
-export class FieldtripComponent {
+export class FieldtripComponent implements AfterViewInit {
 
+
+  private map:L.Map | undefined;
+  
   trip!: Fieldtrip;
   sites!: Fieldsite[];
   errorMessage: string="";
   sub!: Subscription;
 
   constructor(private tripService: FieldtripService, private activatedRoute: ActivatedRoute){}
+
+  ngAfterViewInit(): void {
+    this.initMap();
+  }
 
   ngOnInit(): void {
     
@@ -40,4 +47,19 @@ export class FieldtripComponent {
     this.sub.unsubscribe();
   }
 
+
+  initMap(): void {
+      this.map = L.map('map', {
+      center: [ this.trip.ymapCoord, this.trip.xmapCoord,  ],
+      zoom: 12
+    });
+
+    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      minZoom: 3,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    });
+
+    tiles.addTo(this.map);
+  }
 }
