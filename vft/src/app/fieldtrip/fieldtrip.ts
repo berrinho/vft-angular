@@ -7,8 +7,8 @@ export interface Fieldtrip {
     shortDescription: string;
     overview:         string;
     locationName:     string;
-    xmapCoord:        number;
-    ymapCoord:        number;
+    longitude:        number;
+    latitude:        number;
     sortedSites:      Fieldsite[];
     _links:           Links;
 }

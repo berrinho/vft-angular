@@ -43,7 +43,8 @@ export class MapComponent implements AfterViewInit, OnDestroy{
     this.sub = this.trips$.subscribe({
       next: triplist => {
         for (let trip of triplist){
-          const marker = L.marker([trip.ymapCoord, trip.xmapCoord ]);
+          console.log('looking up marker for trip ' + trip.name + ' lat ' + trip.latitude + ', long ' + trip.longitude);
+          const marker = L.marker([trip.latitude, trip.longitude ]);
           marker.bindPopup("<b>" + trip.name + "</b><br><a href='/fieldtrip/" + trip.id + "'>Visit</a>");
           marker.addTo(this.map);
           console.log('got marker for trip ' + trip.name);

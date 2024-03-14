@@ -10,8 +10,8 @@ export interface Fieldsite {
     localMapDescription: string;
     droneFlightUrl:      string;
     homepageImage:       string;
-    xmapCoord:           number;
-    ymapCoord:           number;
+    latitude:           number;
+    longitude:           number;
     _links:              SiteLinks;
 }
 

@@ -52,7 +52,7 @@ export class FieldtripComponent implements AfterViewInit {
 
   initMap(): void {
       this.map = L.map('map', {
-      center: [ this.trip.ymapCoord, this.trip.xmapCoord,  ],
+      center: [ this.trip.latitude, this.trip.longitude,  ],
       zoom: 12
     });
 
@@ -65,7 +65,7 @@ export class FieldtripComponent implements AfterViewInit {
     tiles.addTo(this.map);
 
     for ( const site of this.sites) {
-        const marker = L.marker([site.ymapCoord, site.xmapCoord ]);
+        const marker = L.marker([site.latitude, site.longitude ]);
         marker.bindPopup("<b>" + site.name + "</b><br><a href='/fieldsite/" + site.id + "'>Visit</a>");
         marker.addTo(this.map);
 

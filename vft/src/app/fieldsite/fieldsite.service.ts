@@ -10,8 +10,6 @@ import { Fieldtrip } from "../fieldtrip/fieldtrip";
 )
 export class FieldsiteService {
 
-
-
     indivSiteUrl = 'https://fieldtripviewer.herokuapp.com/api/sites/';
     sitesUrl = 'https://fieldtripviewer.herokuapp.com/api/sites';
     tripForSiteUrl = "https://fieldtripviewer.herokuapp.com/api/sites/$/fieldTrip";
