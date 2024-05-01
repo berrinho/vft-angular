@@ -32,23 +32,6 @@ export class FieldtripService {
     );
 
 
-    public getFieldtrip(trip_id: number): Observable<Fieldtrip|undefined> {
-        var tripurl = this.fieldtripUrl+String("/")+String(trip_id);
-
-        const existingFieldtrip = this.fieldTripList$.pipe(
-            map(tripList => tripList.find(trip => trip.id === trip_id))
-        );
-        if (existingFieldtrip!=undefined){
-            return existingFieldtrip;
-        } else {
-            return this.httpclient.get<Fieldtrip>(tripurl)
-            .pipe(
-                tap(data => console.log('All: ', JSON.stringify(data))),
-                catchError(this.handleError)
-            );
-        }
-    }
-
     private handleError(err: HttpErrorResponse): Observable<never>{
         let errorMessage = '';
         if (err.error instanceof ErrorEvent) {

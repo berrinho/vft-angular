@@ -69,7 +69,7 @@ export class FieldtripComponent implements AfterViewInit {
 
         for ( const site of trip.sortedSites) {
             const marker = L.marker([site.latitude, site.longitude ]);
-            marker.bindPopup("<b>" + site.name + "</b><br><a href='/fieldsite/" + site.id + "," +trip.id+ "'>Visit</a>");
+            marker.bindPopup("<b>" + site.name + "</b><br><a href='/fieldsite/" + site.id + "/" +trip.id+ "'>Visit</a>");
             marker.addTo(this.map);
 
         }

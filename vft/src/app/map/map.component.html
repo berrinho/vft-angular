@@ -20,7 +20,7 @@
 
                         <tr *ngFor="let trip of tripObs">
                             <td>{{trip.name}}</td>
-                            <td><a [routerLink]="['/fieldtrip#', trip?.id]">Explore</a></td>
+                            <td><a [routerLink]="['/fieldtrip', trip?.id]">Explore</a></td>
                         </tr>
                         </tbody>
                     </table>
