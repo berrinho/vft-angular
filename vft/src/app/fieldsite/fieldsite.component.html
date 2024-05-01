@@ -1,54 +1,55 @@
 <div class="container-fluid" *ngIf="currentSite$ | async as currentSite">
     <div class="row" *ngIf="currentTrip$ | async as currentTrip">
-    <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar" id="sidebarMenu" th:fragment="sidebarMenu (site_id, field_trip_id)">
-        <div class="position-sticky pt-3" >
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a aria-current="page" class="nav-link" [routerLink]="['./home', currentSite.id]" routerLinkActive="active" 
-                    >
-                        <span data-feather="home"></span>
-                        Field Site Home
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['./tour', currentSite.id]" routerLinkActive="active">
-                        <span data-feather="map-pin"></span>
-                        Virtual Tour
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/drone" th:href="'/site/drone?id='+ ${site_id}">
-                        <span data-feather="video"></span>
-                        Drone Footage
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/site/map" th:href="'/site/map?id='+ ${site_id}">
-                        <span data-feather="map"></span>
-                        Site Map
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['./fieldguide',currentTrip?.id]">
-                        <span data-feather="book-open"></span>
-                        Field Guide
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" th:href="'/site/activities?id='+ ${site_id}">
-                        <span data-feather="book-open"></span>
-                        Activities
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        <nav aria-label="breadcrumb" class="pt-3">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item" ><a [routerLink]="['/fieldtrip',currentTrip?.id]">{{currentTrip?.name}}</a></li>
-              <li class="breadcrumb-item active" aria-current="page">{{currentSite?.name}}</li>
-            </ol>
-          </nav>
-        <router-outlet></router-outlet>
-    </main>
+        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar" id="sidebarMenu" th:fragment="sidebarMenu (site_id, field_trip_id)">
+            <div class="position-sticky pt-3" >
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a aria-current="page" class="nav-link" [routerLink]="['./home', currentSite.id]" routerLinkActive="active">
+                            <span data-feather="home"></span>
+                            Field Site Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['./tour', currentSite.id]" routerLinkActive="active">
+                            <span data-feather="map-pin"></span>
+                            Virtual Tour
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/drone" th:href="'/site/drone?id='+ ${site_id}">
+                            <span data-feather="video"></span>
+                            Drone Footage
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/site/map" th:href="'/site/map?id='+ ${site_id}">
+                            <span data-feather="map"></span>
+                            Site Map
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['./fieldguide',currentTrip?.id]">
+                            <span data-feather="book-open"></span>
+                            Field Guide
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="'/site/activities?id='+ ${site_id}">
+                            <span data-feather="book-open"></span>
+                            Activities
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <nav aria-label="breadcrumb" class="pt-3">
+                <ol class="breadcrumb">
+                <li class="breadcrumb-item" ><a [routerLink]="['/fieldtrip',currentTrip?.id]">{{currentTrip?.name}}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{currentSite?.name}}</li>
+                </ol>
+            </nav>
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+</div>

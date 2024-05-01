@@ -17,7 +17,7 @@ export class FieldsiteService {
     //indivSiteUrl = 'http://localhost:8080/api/sites/2';
 
  
-    public cachedObservable!: Observable<any>;
+    public cachedSiteObservable!: Observable<any>;
     public cachedTripObservable!: Observable<Fieldtrip>;
     private cachedSiteId!: number;
 
@@ -27,15 +27,15 @@ export class FieldsiteService {
         console.log("site id is " + id);
 
         //if a new site is being requested fetch this via http
-        if (!this.cachedObservable || id != this.cachedSiteId) {
-            this.cachedObservable = this.httpclient.get<Fieldsite>(this.indivSiteUrl+id)
+        if (!this.cachedSiteObservable || id != this.cachedSiteId) {
+            this.cachedSiteObservable = this.httpclient.get<Fieldsite>(this.indivSiteUrl+id)
           .pipe(
             tap(site => this.cachedSiteId = site.id),
             catchError(this.handleError),
             share()
           );
         }
-        return this.cachedObservable;
+        return this.cachedSiteObservable;
     }
 
 

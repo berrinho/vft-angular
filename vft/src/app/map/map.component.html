@@ -19,8 +19,8 @@
                         <tbody>
 
                         <tr *ngFor="let trip of tripObs">
-                            <td th:text="${fieldTrip.getName()}+', ' + ${fieldTrip.getLocationName()}">{{trip.name}}</td>
-                            <td><a th:href="@{/loadfieldtrip?id={type}(type=${fieldTrip.getId()})}">Explore</a></td>
+                            <td>{{trip.name}}</td>
+                            <td><a [routerLink]="['/fieldtrip#', trip?.id]">Explore</a></td>
                         </tr>
                         </tbody>
                     </table>

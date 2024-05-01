@@ -1,6 +1,6 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, OperatorFunction, Subscription, defaultIfEmpty, filter, map, of } from 'rxjs';
 import { Fieldsite } from '../fieldsite/fieldsite';
 //nb - to use types like this install leaflet as follows npm install leaflet @types/leaflet
 //also need to add the leaflet stylesheet to angular.json
@@ -21,54 +21,59 @@ export class FieldtripComponent implements AfterViewInit {
 
   private map:L.Map | undefined;
   
-  trip!: Fieldtrip;
+  currentTrip$!: Observable<Fieldtrip>;
   sites!: Fieldsite[];
   errorMessage: string="";
   sub!: Subscription;
-
+  
   constructor(private tripService: FieldtripService, private activatedRoute: ActivatedRoute){}
 
   ngAfterViewInit(): void {
+    console.log("ng after view init called");
+    console.log("state of current trip is " + this.currentTrip$);
     this.initMap();
   }
 
   ngOnInit(): void {
-    
+    //get trip id from the route parameters
     var tripId = Number(this.activatedRoute.snapshot.paramMap.get("id"));
-
-    this.sub = this.tripService.getFieldtrip( tripId ).subscribe({
-      next: trip => {
-        this.trip = trip;
-        this.sites = trip.sortedSites;
-      },
-      error: err => this.errorMessage = err}
-    );
+    
+    //use Observable already retrieved in service to find current fieldtrip
+    this.currentTrip$ = this.tripService.fieldTripList$.pipe(
+        map(tripList => tripList.find(trip => trip.id === tripId)),
+        //this woowoo is to tell the compiler that undefined will never be returned
+        filter(trip => trip !== undefined) as OperatorFunction<Fieldtrip | undefined, Fieldtrip>
+      );
   }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 
-
+  //initialize the fieldtrip map
   initMap(): void {
-      this.map = L.map('map', {
-      center: [ this.trip.latitude, this.trip.longitude,  ],
-      zoom: 12
-    });
 
-    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-      minZoom: 3,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    });
+    this.sub = this.currentTrip$.subscribe(trip => {
+          this.map = L.map('map', {
+          center: [ trip.latitude, trip.longitude,  ],
+          zoom: 12
+        });
 
-    tiles.addTo(this.map);
+        const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 18,
+          minZoom: 3,
+          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        });
 
-    for ( const site of this.sites) {
-        const marker = L.marker([site.latitude, site.longitude ]);
-        marker.bindPopup("<b>" + site.name + "</b><br><a href='/fieldsite/" + site.id + "'>Visit</a>");
-        marker.addTo(this.map);
+        tiles.addTo(this.map);
 
-    }
-  }
+        for ( const site of trip.sortedSites) {
+            const marker = L.marker([site.latitude, site.longitude ]);
+            marker.bindPopup("<b>" + site.name + "</b><br><a href='/fieldsite/" + site.id + "," +trip.id+ "'>Visit</a>");
+            marker.addTo(this.map);
+
+        }
+      }
+    );
+  }  
 }

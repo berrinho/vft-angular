@@ -17,7 +17,7 @@ export const routes: Routes = [
     {path: 'fieldguide', component: FieldguideComponent},
     {path: 'species/:id', component: SpeciesComponent},
     {path: 'fieldtrip/:id', component: FieldtripComponent},
-    {path: 'fieldsite/:id', component: FieldsiteComponent, 
+    {path: 'fieldsite/:id/:tripid', component: FieldsiteComponent, 
         children: [
                 {path: '', component: FieldsiteHomeComponent},
                 {path: 'home/:id', component: FieldsiteHomeComponent},

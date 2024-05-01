@@ -13,6 +13,8 @@ export class FieldtripService {
     //fieldtripUrl = "http://localhost:8080/api/fieldtrips/5";
     fieldtripUrl = "https://fieldtripviewer.herokuapp.com/api/fieldtrips";
  
+    constructor(private httpclient: HttpClient){}
+
     fieldTripList$ = this.httpclient.get<any>(this.fieldtripUrl)
     .pipe(
         map(response => {
@@ -29,16 +31,22 @@ export class FieldtripService {
         catchError(this.handleError)
     );
 
-    constructor(private httpclient: HttpClient){}
 
-    public getFieldtrip(trip_id: number): Observable<Fieldtrip> {
+    public getFieldtrip(trip_id: number): Observable<Fieldtrip|undefined> {
         var tripurl = this.fieldtripUrl+String("/")+String(trip_id);
 
-        return this.httpclient.get<Fieldtrip>(tripurl)
-        .pipe(
-            tap(data => console.log('All: ', JSON.stringify(data))),
-            catchError(this.handleError)
+        const existingFieldtrip = this.fieldTripList$.pipe(
+            map(tripList => tripList.find(trip => trip.id === trip_id))
         );
+        if (existingFieldtrip!=undefined){
+            return existingFieldtrip;
+        } else {
+            return this.httpclient.get<Fieldtrip>(tripurl)
+            .pipe(
+                tap(data => console.log('All: ', JSON.stringify(data))),
+                catchError(this.handleError)
+            );
+        }
     }
 
     private handleError(err: HttpErrorResponse): Observable<never>{

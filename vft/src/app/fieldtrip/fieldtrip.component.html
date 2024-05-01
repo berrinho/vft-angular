@@ -1,26 +1,24 @@
-<div class="row">
-<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light">
+<div class="row" >
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light" *ngIf="currentTrip$ | async as tripObs">
     <div class="position-sticky pt-3">
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
         <span>Sites</span>
       </h6>
       <ul class="nav flex-column mb-2">
-        <li *ngFor="let site of sites" class="nav-item" >
-            <a class="nav-link" [routerLink]="['/fieldsite', site?.id]" routerLinkActive="active" >
+        <li *ngFor="let site of tripObs.sortedSites" class="nav-item" >
+            <a class="nav-link" [routerLink]="['/fieldsite', site?.id, tripObs.id]" routerLinkActive="active" >
                 <span data-feather="file-text"></span>{{site.name}}</a>
         </li>
       </ul>
     </div>
 </nav>
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">{{ trip.name }}</h1>
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" >
+  <div *ngIf="currentTrip$ | async as tripObs" class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">{{ tripObs.name }}</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
       <div class="btn-group me-2">
         <div class="btn-group me-2">
-          <a class="btn btn-sm btn-outline-secondary" th:href="'/trip/' + ${tripCommand.getId()} + '/edit'" href="/trip/3/edit" >Edit Trip Overview</a>
-          <a class="btn btn-sm btn-outline-secondary" th:href="'/sites/' + ${tripCommand.getId()} + '/edit'" href="/sites/3/edit" >Update Sites for Trip</a>
         </div>
       </div>
     </div>
@@ -28,7 +26,7 @@
   <div class="container-fluid">
     <div>
       <h2>Overview</h2>
-      <p>{{trip.overview}}</p>
+      <p *ngIf="currentTrip$ | async as tripObs">{{tripObs.overview}}</p>
     </div>
 
     <div>
