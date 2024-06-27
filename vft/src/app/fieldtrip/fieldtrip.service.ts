@@ -2,16 +2,17 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, catchError, map, shareReplay, tap, throwError } from "rxjs";
 import { Fieldtrip } from "./fieldtrip";
-
+import { environment } from "../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
     }
 )
 export class FieldtripService {
+    private API_URL = environment.API_URL;
 
-    //fieldtripUrl = "http://localhost:8080/api/fieldtrips/5";
-    fieldtripUrl = "https://fieldtripviewer.herokuapp.com/api/fieldtrips";
+    fieldtripUrl = this.API_URL+"/fieldtrips";
+    //fieldtripUrl = "https://fieldtripviewer.herokuapp.com/api/fieldtrips";
  
     constructor(private httpclient: HttpClient){}
 

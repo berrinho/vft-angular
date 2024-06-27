@@ -4,6 +4,9 @@ import { CommonModule } from '@angular/common';
 import * as L from 'leaflet';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Marker } from 'leaflet';
+
+
 
 @Component({
   selector: 'app-map',
@@ -40,11 +43,20 @@ export class MapComponent implements AfterViewInit, OnDestroy{
 
     tiles.addTo(this.map);
 
+    //necessary due to bug in way angular imports the leaflet icons
+    const myIcon = L.icon({
+      iconUrl: 'assets/media/map-icon-green.png',
+      shadowUrl: 'assets/media/marker-shadow.png',
+    iconAnchor: [12,41]}
+    );
+
     this.sub = this.trips$.subscribe({
       next: triplist => {
         for (let trip of triplist){
           console.log('looking up marker for trip ' + trip.name + ' lat ' + trip.latitude + ', long ' + trip.longitude);
-          const marker = L.marker([trip.latitude, trip.longitude ]);
+          
+          const marker = L.marker([trip.latitude, trip.longitude ], 
+            {icon: myIcon});
           marker.bindPopup("<b>" + trip.name + "</b><br><a href='/fieldtrip/" + trip.id + "'>Visit</a>");
           marker.addTo(this.map);
           console.log('got marker for trip ' + trip.name);

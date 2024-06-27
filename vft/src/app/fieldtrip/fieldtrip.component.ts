@@ -59,6 +59,13 @@ export class FieldtripComponent implements AfterViewInit {
           zoom: 12
         });
 
+         //necessary due to bug in way angular imports the leaflet icons
+         const myIcon = L.icon({
+          iconUrl: 'assets/media/map-icon-green.png',
+          shadowUrl: 'assets/media/marker-shadow.png',
+        iconAnchor: [12,41]}
+        );
+
         const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           maxZoom: 18,
           minZoom: 3,
@@ -68,7 +75,8 @@ export class FieldtripComponent implements AfterViewInit {
         tiles.addTo(this.map);
 
         for ( const site of trip.sortedSites) {
-            const marker = L.marker([site.latitude, site.longitude ]);
+            const marker = L.marker([site.latitude, site.longitude ], 
+              {icon: myIcon});
             marker.bindPopup("<b>" + site.name + "</b><br><a href='/fieldsite/" + site.id + "/" +trip.id+ "'>Visit</a>");
             marker.addTo(this.map);
 

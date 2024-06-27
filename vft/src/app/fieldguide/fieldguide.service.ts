@@ -2,13 +2,18 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, tap, catchError, throwError, map, shareReplay } from "rxjs";
 import { Species } from "./species";
+import { environment } from "../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
     }
 )
 export class FieldguideService{
-    speciesUrl = "https://fieldtripviewer.herokuapp.com/api/species";
+    private API_URL = environment.API_URL;
+
+    //speciesUrl = "https://fieldtripviewer.herokuapp.com/api/species";
+    speciesUrl = this.API_URL+"/species";
+
 
     speciesList$ = this.httpclient.get<any>(this.speciesUrl).pipe(
         map(response => {
